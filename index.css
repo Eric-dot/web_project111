@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+.centered {
+  justify-content: center; /* center items horizontally, in this case */
+  align-items: center;     /* center items vertically, in this case */
+  display: flex;
+}
+
+/* sources https://unsplash.com/photos/c9OCWLka764 */
+body {
+
+  background-image: url('/public/city.jpg'); 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 250vh 100vh;
+
+  
+}
+
+.image{
+  height: auto;
+  width: auto;
+  max-width: 50%;
+  min-width: 50%;
+}
+
+#searchForm {
+  height: 380px;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4F6FAD;
+  padding: 25px 55px 25px 50px;
+}
+#search {
+  margin: auto;
+  background-color: white;
+  border: 5px solid lightgray;
+  width: 800px;
+  height: 600px;
+}
+#mainForm {
+  margin-bottom: 10px;
+}
+.searchFormRow {
+  width: 690px;
+  height: 84px;
+}
+.floatLeftLabel {
+  float: left;
+}
+
+.floatRightLabel {
+  float: right;
+}
+#searchHeader {
+  justify-content: center; /* center items horizontally, in this case */
+  align-items: center;     /* center items vertically, in this case */
+  display: flex;
+  color: black;
+  margin-top: 50px;
+}
