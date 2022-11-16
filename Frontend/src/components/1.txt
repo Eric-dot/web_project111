@@ -1,0 +1,304 @@
+            <Tabs
+                className="tabs"
+                defaultActiveKey="1"
+                centered
+                items={[
+                  {
+                    key: 1,
+                    label: <span className="tab-label">Bussiness details</span>,
+                    children: (
+                      <>
+                        <div className="row mt-5">
+                          <div className="col-6 text-center">
+                            <h4>Address</h4>
+                            <p>
+                              {detail.location.address1 +
+                                detail.location.address2 +
+                                detail.location.address3 +
+                                " " +
+                                detail.location.city +
+                                " " +
+                                detail.location.state +
+                                " " +
+                                detail.location.zip_code}
+                            </p>
+                          </div>
+                          <div className="col-6 text-center">
+                            <h4>Category</h4>
+                            <p>
+                              {detail.categories
+                                .map((items) => items.title)
+                                .join(" | ")}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6 text-center">
+                            <h4>Phone</h4>
+                            <p>{detail.display_phone}</p>
+                          </div>
+                          <div className="col-6 text-center">
+                            <h4>Price range</h4>
+                            <p>{detail.price}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6 text-center">
+                            <h4>Status</h4>
+                            <p>
+                              {detail.hours.map(
+                                (items) => items.is_open_now
+                              ) ? (
+                                <span className="text2">Open</span>
+                              ) : (
+                                <span className="text1">Closed</span>
+                              )}
+                            </p>
+                          </div>
+                          <div className="col-6 text-center">
+                            <h4>Visit ylep for more</h4>
+                            <a href={detail.url}>Business link</a>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-12 text-center">
+                            <button
+                              type="button"
+                              className="btn btn-danger"
+                              onClick={showModal}
+                            >
+                              Reserve Now
+                            </button>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-12 text-center mt-4 mb-3">
+                            Share on:
+                            <img
+                              src={twitter}
+                              className="share"
+                              onClick={() => Twitter(detail.url, detail.name)}
+                            />
+                            <img
+                              src={facebook}
+                              className="share"
+                              onClick={() => Facebook(detail.url)}
+                            />
+                          </div>
+                        </div>
+                       
+                        <div>
+                          <Swiper
+                            navigation={true}
+                            modules={[Navigation, Autoplay]}
+                            autoplay
+                          >
+                            {detail.photos.map((item, index) => (
+                              <SwiperSlide key={index}>
+                                <img
+                                  src={item}
+                                  alt=""
+                                  className='"img-fluid" '
+                                  width={300}
+                                  height={300}
+                                />
+                              </SwiperSlide>
+                            ))}
+                          </Swiper>
+                        </div>
+                        <Modal show={isModalOpen} onHide={handleCancel}>
+                          <Modal.Header>
+                            <Modal.Title>
+                              <h4>Reservation form</h4>
+                            </Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <h5 className="text-center">{detail.name}</h5>
+                            <Form id="reserveForm">
+                              <Form.Group>
+                                <Form.Label
+                                  htmlFor="mail"
+                                  className="form-label"
+                                >
+                                  Email
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  className="form-control"
+                                  name="mail"
+                                  id="mail"
+                                  onChange={(e) => emialcheck(e)}
+                                  isInvalid={!!errors.mail}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.mail}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+                              <Form.Group>
+                                <Form.Label
+                                  htmlFor="date"
+                                  className="form-label"
+                                >
+                                  Date
+                                </Form.Label>
+                                <Form.Control
+                                  type="date"
+                                  className="form-control"
+                                  name="date"
+                                  id="date"
+                                  min={new Date().toISOString().split("T")[0]}
+                                  onChange={(e) =>
+                                    setField("date", e.target.value)
+                                  }
+                                  isInvalid={!!errors.date}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                  {errors.date}
+                                </Form.Control.Feedback>
+                              </Form.Group>
+
+                              <Form.Group style={{ display: "inline" }}>
+                                <Form.Label
+                                  htmlFor="hour"
+                                  className="form-label"
+                                >
+                                  Time
+                                </Form.Label>
+                                <br></br>
+                                <div style={{ display: "inline" }}>
+                                  <Form.Control
+                                    as="select"
+                                    id="hour"
+                                    className="form-control"
+                                    name="hour"
+                                    style={{
+                                      width: "100px",
+                                      display: "inline",
+                                    }}
+                                    onChange={(e) =>
+                                      setField("hour", e.target.value)
+                                    }
+                                    isInvalid={!!errors.hour}
+                                  >
+                                    <option
+                                      selected
+                                      disabled
+                                      style={{ display: "none" }}
+                                      defaultValue=""
+                                    ></option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                  </Form.Control>
+                                </div>
+                              </Form.Group>
+                              <p style={{ display: "inline" }}> : </p>
+                              <div style={{ display: "inline" }}>
+                                <Form.Group style={{ display: "inline" }}>
+                                  <Form.Control
+                                    as="select"
+                                    id="minute"
+                                    className="form-control"
+                                    name="minute"
+                                    style={{
+                                      width: "100px",
+                                      display: "inline",
+                                    }}
+                                    onChange={(e) =>
+                                      setField("minute", e.target.value)
+                                    }
+                                    isInvalid={!!errors.minute}
+                                  >
+                                    <option
+                                      selected
+                                      disabled
+                                      style={{ display: "none" }}
+                                      defaultValue=""
+                                    ></option>
+                                    <option value="00">00</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                  </Form.Control>
+
+                                  <div
+                                    style={{ display: "inline" }}
+                                    className="mx-2  "
+                                  >
+                                    <FiClock size={18} />
+                                  </div>
+                                </Form.Group>
+                              </div>
+                              <div className="text-center my-3">
+                                <Button
+                                  className="btn-danger"
+                                  onClick={onSubmit}
+                                >
+                                  Submit
+                                </Button>
+                                {/* <Button type="submit">Submit form</Button> */}
+                              </div>
+                            </Form>
+                          </Modal.Body>
+
+                          <Modal.Footer>
+                            <Button onClick={handleCancel} className="btn-dark">
+                              Close
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                      </>
+                    ),
+                  },
+                  {
+                    key: 2,
+                    label: <span className="tab-label">Map location</span>,
+                    children: (
+                      <div>
+                        <GoogleMap
+                          zoom={12}
+                          center={{
+                            lat: detail.coordinates.latitude,
+                            lng: detail.coordinates.longitude,
+                          }}
+                          mapContainerClassName="map-container"
+                        >
+                          <Marker
+                            position={{
+                              lat: detail.coordinates.latitude,
+                              lng: detail.coordinates.longitude,
+                            }}
+                          />
+                        </GoogleMap>
+                      </div>
+                    ),
+                  },
+                  {
+                    key: 3,
+                    label: <span className="tab-label">Reviews</span>,
+                    children: (
+                      <>
+                        <table className="table table-striped">
+                          <tbody>
+                            {Review.map((item, index) => (
+                              <tr key={index}>
+                                <td>
+                                  <b>{item.user.name}</b>
+                                  <p>Rating:{item.rating}/5</p>
+                                  <p>{item.text}</p>
+                                  <p>{item.time_created}</p>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </>
+                    ),
+                  },
+                ]}
+              />
