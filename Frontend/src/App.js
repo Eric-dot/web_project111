@@ -1,45 +1,22 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Form from './components/Form';
-import Table from './components/Table';
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Booking from "./pages/Booking";
+import Layout from "./pages/Layout";
+import Search from "./pages/Search";
 
 const App = () => {
-   const [tasks, setTasks] = useState({businesses:[],region:[],total:0})
- 
-  useEffect(() => {
-
-  
-  })
-
-  
-  const axiosTask = async (task) => {
-    const res = await axios({
-      
-      method: 'get',
-      url: 'http://localhost:8081/search',
-      params: {
-        term: task.Keyword,
-        location: task.Location,
-        limit: 10,
-      },
-      headers: {
-        Authorization:
-          'Bearer DB9-K_wTi80GDUBskr3tsjfOHYpqTg9TBTS8lHBhqA-IE_0oc-BAyACbyGlK-2YPUBwC5ExYq2g0FUpkIBmTwTv_tzm58qW-EvwXhEVLXVYrPXBtMIr8_2GbJF6kX3Yx',
-      },
-    })
-    setTasks(res.data)
-  }
- 
-  
-  
   return (
     <div>
-      <Form onAdd={axiosTask} />
-      <Table tasks={tasks} />
-
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/search" />} />
+          <Route element={<Layout />}>
+            <Route path="/search" element={<Search />} />
+            <Route path="/bookings" element={<Booking />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
-export default App
+export default App;
